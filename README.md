@@ -1,0 +1,1 @@
+I am a freshman in highschool and have 0 coding experience. There is a game that I play with some unfinished code, and I want to finish it. If you are a random person and you want to critique me, please feel free to do so

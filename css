@@ -1,0 +1,832 @@
+/* -------------------------------------------------- Base
+*/
+* {
+    box-sizing: border-box;
+    user-select: none;
+    scrollbar-width: thin;
+    scrollbar-color: #fff7 #fff3;
+}
+
+:root {
+    --font-family: Arial, sans-serif;
+    --font-size: 12px;
+}
+
+/* -------------------------------------------------- Common elements
+*/
+body {
+    background: black;
+    color: white;
+
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: 1.2;
+}
+
+button, input {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+}
+
+button:focus-visible, input:focus-visible {
+    outline: 1px solid #aaa;
+}
+
+
+/* -------------------------------------------------- Common classes
+*/
+.fill-screen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+.scrollable {
+    max-width: 100%;
+    overflow: hidden auto;
+}
+.base-padding {
+    padding: 5px 7px;
+}
+.block-padding {
+    padding: 7px;
+}
+.icon {
+    margin: 10%;
+    width: 80%;
+    max-width: 80%;
+    height: 80%;
+    max-height: 80%;
+}
+
+button {
+    color: white;
+    line-height: 1.2;
+    border-radius: 3px;
+    box-shadow: inset 0 0 1px #0007;
+    border: 1px solid #aaaa;
+    border-radius: 3px;
+    background: linear-gradient(#666, #333);
+    padding: 5px 8px;
+
+    &:hover {
+        background: linear-gradient(#888, #444);
+    }
+
+    &:active {
+        background: linear-gradient(#444, #222);
+    }
+
+    &:disabled {
+        background: #111;
+        color: #777;
+    }
+}
+
+.flat-button {
+    background: #000a;
+
+    &:hover {
+        background: #222a;
+    }
+
+    &:active {
+        background: #111a;
+    }
+}
+
+.tier-button {
+    background: var(--tier-background);
+
+    &:hover {
+        background: linear-gradient(#fff2, #fff2), var(--tier-background);
+    }
+
+    &:active {
+        background: linear-gradient(#0001, #0001), var(--tier-background);
+    }
+}
+
+/* -------------------------------------------------- View canvas
+*/
+#view-canvas {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+}
+
+/* -------------------------------------------------- Splash text
+*/
+#splash {
+    padding-top: 60px;
+    font-size: 24px;
+    text-align: center;
+    pointer-events: none;
+    line-height: 1;
+    text-shadow: -25px 1px 20px black, 0 1px 20px black, 25px 1px 20px black;
+}
+#splash small {
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.splash {
+    animation: splash 5s linear;
+}
+@keyframes splash {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.splash.rare-spawn-splash {
+    animation: rare-spawn-splash 5s linear;
+}
+@keyframes rare-spawn-splash {
+    0% {
+        filter: brightness(3);
+        text-shadow: 0px 0px 20px white, -25px 1px 20px black, 0 1px 20px black, 25px 1px 20px black;
+    }
+    10% {
+        filter: brightness(1);
+        text-shadow: 0px 0px 20px #fff0, -25px 1px 20px black, 0 1px 20px black, 25px 1px 20px black;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.splash.rare-spawn-splash small {
+    animation: rare-spawn-splash-small 6s linear;
+}
+@keyframes rare-spawn-splash-small {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+}
+
+/* -------------------------------------------------- Topbar
+*/
+#topbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    display: flex;
+    padding: 5px;
+    gap: 4px;
+    background: linear-gradient(#0005, #0000);
+}
+
+#topbar .tally {
+    width: 150px;
+    border-radius: 5px;
+    background: #000a;
+    box-shadow: 0 0 1px #000;
+    border: 1px solid #aaaa;
+    padding: 5px 7px;
+    display: flex;
+    justify-content: space-between;
+    background-clip: padding-box;
+}
+#topbar .tally-title {
+    text-align: left;
+}
+#topbar .tally-value {
+    font-weight: bold;
+}
+
+/* -------------------------------------------------- Cursor lock indicator
+*/
+.cursor-lock {
+    pointer-events: none;
+    background: #fff7;
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* -------------------------------------------------- Current block identifier
+*/
+#block-identifier {
+    pointer-events: none;
+    background: var(--tier-background), linear-gradient(#000c, #000c);
+    position: fixed;
+    bottom: 120px;
+    left: 50%;
+    border-radius: 5px;
+    box-shadow: 0 0 4px #000;
+    border: 1px solid #aaaa;
+    padding: 5px 7px;
+    transform: translate(-50%, -50%);
+}
+#block-identifier.hidden {
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+/* -------------------------------------------------- Menu
+*/
+.menu-button {
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    box-shadow: 0 0 1px #000;
+    padding: 0px;
+}
+.deck-button {
+    transition: inset .3s;
+    animation: deck-in .3s;
+}
+@keyframes deck-in {
+    from {
+        left: 50%;
+        bottom: -50px;
+        transform: scale(0);
+    } to {
+
+    }
+}
+
+/* -------------------------------------------------- Windows
+*/
+.window {
+    position: fixed;
+    width: 150px;
+    background: #000d;
+    border: 1px solid #aaaa;
+    border-radius: 5px;
+    box-shadow: 0 0 4px #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.window > .window-title, .pseudo-window-title {
+    background: linear-gradient(#444a, #222a);
+    border-bottom: 1px solid #aaaa;
+    box-shadow: inset 0 0 3px #fff3;
+    padding: 5px 7px;
+    flex: 0 0;
+    font-weight: bold;
+    display: flex;
+    justify-content: justify;
+}
+.window > .window-title > .close-button {
+    width: 40px;
+    margin: -5px -7px -5px auto;
+    padding: 0;
+    border: none;
+    border-left: 1px solid #aaa7;
+    border-radius: 0px;
+    background: linear-gradient(#711, #311);
+    box-shadow: 0 0 3px #fff3, inset 0 0 2px #0007;
+
+    &:hover {
+        background: linear-gradient(#c22, #511);
+    }
+
+    &:active {
+        background: linear-gradient(#511, #200);
+    }
+}
+.window > .window-title > .close-button::before {
+    content: "✕";
+}
+.window > .window-content {
+    position: relative;
+    flex: 0 1 auto;
+}
+.window-cover {
+    position: fixed;
+    inset: 0;
+    background: #000a;
+}
+.window-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 5px;
+    padding-top: 5px;
+}
+
+.no-javascript {
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: fit-content; 
+    max-width: min(90%, 400px); 
+    max-height: 80%;
+}
+
+/* -------------------------------------------------- Preloader
+*/
+.preloader-header, .preloader .flavor-text {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.preloader-header {
+    height: 100px;
+}
+.preloader .flavor-text {
+    height: 50px;
+    background: #222;
+    padding: 5px 7px;
+}
+.preloader-header h1 {
+    letter-spacing: -10%;
+    font-weight: 200;
+    font-style: italic;
+    font-size: 32px;
+}
+.preloader .loading-bar {
+    height: 10px;
+    border-block: 1px solid #aaaa;
+    background: linear-gradient(#111, #000);
+}
+.preloader .loading-bar .fill {
+    height: 100%;
+    width: calc(100% * var(--progress, 0));
+    background: linear-gradient(#6af, #48c);
+}
+.preloader .loading-action {
+    height: calc(1.2em * 10px);
+    padding: 5px 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* -------------------------------------------------- Intro
+*/
+.intro-instructions {
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+}
+
+.intro-instructions > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.intro-instructions big {
+    font-size: 24px;
+}
+
+/* -------------------------------------------------- Resources
+*/
+.inventory-item {
+    padding: 5px 7px;
+    display: flex;
+    justify-content: space-between;
+    background-clip: padding-box;
+    background: var(--tier-background);
+}
+.inventory-item > .item-amount {
+    font-weight: bold;
+}
+.inventory-item.complete > .item-amount {
+    color: lightgreen;
+}
+
+/* -------------------------------------------------- Inventory
+*/
+.window > .inv-grid {
+    flex: 0 1 100%;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+}
+.inv-grid > * {
+    flex: 0 1 100%;
+    height: 100%;
+    border-right: 1px solid #aaaa;
+    overflow: hidden auto;
+}
+.inv-grid > :last-child {
+    margin-inline-end: -1px;
+}
+
+.inv-list > button {
+    display: block;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+}
+
+.inv-desc {
+    flex: 0 0 240px;
+    position: relative;
+}
+.inv-recipe {
+    flex: 0 0 200px;
+    position: relative;
+    margin-inline-end: -1px;
+}
+.inv-pin-dragger {
+    position: absolute;
+    top: calc(1.2em + 19px);
+    right: -1px;
+    height: calc(1.2em + 12px);
+    width: 201px;
+    border: 1px solid #aaaa;
+    border-radius: 5px 0 0 0;
+}
+
+.inv-item-name {
+    font-weight: bold;
+}
+.inv-item-desc {
+    margin-top: 5px;
+    font-size: smaller;
+    font-style: italic;
+    line-height: 1.1;
+    text-align: justify;
+}
+.inv-item-ability {
+    border: 1px solid #aaa;
+    background: #3333;
+    border-radius: 3px;
+    padding: 5px 7px;
+    margin-top: 8px;
+}
+.inv-item-ability + .inv-item-ability {
+    margin-top: 3px;
+}
+.inv-item-ability .inv-item-desc {
+    margin-top: 3px;
+}
+.inv-item-action {
+    position: absolute;
+    display: block;
+    inset: auto 7px 7px 7px;
+    width: calc(100% - 14px);
+}
+
+
+
+/* -------------------------------------------------- Gaiadex
+*/
+.grid-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 3px;
+}
+.grid-list > * {
+    aspect-ratio: 1;
+}
+
+.gaiadex-block {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: end;
+    align-items: stretch;
+    font-size: 10px;
+    padding-inline: 0;
+}
+
+.block-faces {
+    position: absolute;
+    inset: 0;
+    filter: drop-shadow(-2px 2px 2px #0007);
+}
+
+.block-faces img {
+    position: absolute;
+    top: calc(50% - 70px);
+    left: calc(50% - 64px);
+    object-fit: none;
+    object-position: calc(-1px * var(--face-left)) calc(-1px * var(--face-top));
+    width: calc(1px * var(--face-width));
+    height: calc(1px * var(--face-height));
+    margin: 0;
+    
+    --base-transform: scale(calc(40 / var(--face-width)), calc(-40 / var(--face-height)));
+
+    transform: var(--base-transform);
+}
+
+.hq-gaiadex .block-faces img {
+    top: calc(50% - 68px);
+    left: calc(50% - 65.5px);
+    --base-transform: scale(calc(30 / var(--face-width)), calc(-30 / var(--face-height))) perspective(300px) rotateX(30deg) rotateY(30deg);
+    
+    &:nth-of-type(1) {
+        filter: brightness(0.6);
+        transform: var(--base-transform) rotateY(-90deg) translate3d(0, 0, 64px);
+    }
+    &:nth-of-type(2) {
+        filter: brightness(0.8);
+        transform: var(--base-transform) translate3d(0, 0, 64px);
+    }
+    &:nth-of-type(3) {
+        transform: var(--base-transform) rotateX(-90deg) translate3d(0, 0, 64px);
+    }
+}
+
+.block-name {
+    z-index: 1;
+    line-height: 1;
+    text-shadow: 1px 1px 2px #000, 1px 1px 2px #000;
+}
+
+.dex-info-table {
+    display: flex;
+}
+
+.dex-info-table > * {
+    flex: 0 1 100%;
+}
+
+.dex-info-table small {
+    font-size: 10px;
+}
+
+
+.rarity-text {
+    font-weight: 900;
+    background: linear-gradient(90deg, #fff3, #fff7), var(--tier-background), var(--tier-background), var(--tier-background), var(--tier-background), var(--tier-background);
+    filter: brightness(1.5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* -------------------------------------------------- Teleport
+*/
+.button-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: stretch;
+}
+
+/* -------------------------------------------------- Rarity tiers
+*/
+[tier="-1"] {
+    --tier-background: linear-gradient(90deg, #333, #3333);
+}
+[tier="0"] {
+    --tier-background: linear-gradient(90deg, #666, #6663);
+}
+[tier="1"] {
+    --tier-background: linear-gradient(90deg, #55f, #55f3);
+}
+[tier="2"] {
+    --tier-background: linear-gradient(90deg, #4a4, #4a43);
+}
+[tier="3"] {
+    --tier-background: linear-gradient(90deg, #a4f, #a4f3);
+}
+[tier="4"] {
+    --tier-background: linear-gradient(90deg, #4aa, #4aa3);
+}
+[tier="5"] {
+    --tier-background: linear-gradient(90deg, #d57, #d573);
+}
+[tier="6"] {
+    --tier-background: linear-gradient(90deg, #993, #9933);
+}
+[tier="7"] {
+    --tier-background: linear-gradient(90deg, #a63, #a633);
+}
+[tier="8"] {
+    --tier-background: linear-gradient(90deg, #48c, #68a3);
+}
+[tier="9"] {
+    --tier-background: linear-gradient(90deg, #248, #6263);
+}
+[tier="10"] {
+    --tier-background: linear-gradient(90deg, #824, #3263);
+}
+[tier="11"] {
+    --tier-background: linear-gradient(90deg, #224, #4223);
+}
+
+/* -------------------------------------------------- Options
+*/
+.options-holder {
+    display: flex;
+    flex-direction: column;
+}
+
+.window-tab-list {
+    padding: 5px 7px 0 7px;
+    box-shadow: inset 0 -1px #aaaa, 0 10px 10px #000;
+    display: flex;
+    align-items: end;
+    flex: 0 0 calc(1.2em + 20px);
+}
+.window-tab-list > button {
+    padding: 5px 8px;
+    border-radius: 0;
+    border-right: none;
+}
+.window-tab-list > button:first-child {
+    border-top-left-radius: 3px;
+}
+.window-tab-list > button:disabled {
+    border-radius: 3px 3px 0 0;
+    border-right: 1px solid #aaaa;
+    background: #000;
+    color: #fff;
+    padding: 7px 10px;
+    border-bottom: none;
+    font-weight: bold;
+}
+.window-tab-list > button:disabled + button {
+    border-left: none;
+}
+.window-tab-list > button:last-child {
+    border-top-right-radius: 3px;
+    border-right: 1px solid #aaaa;
+}
+
+.options-content {
+    padding: 7px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    flex: 0 1 auto;
+}
+
+.option-group {
+    border: 1px solid #aaa7;
+    border-radius: 3px;
+    padding: 7px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.option-group > legend {
+    padding-inline: 7px;
+    font-weight: bold;
+}
+
+.option-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+}
+.option-item > label {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+input[type=checkbox] {
+    appearance: none;
+    position: relative;
+    height: calc(1.2em + 10px);
+    width: calc(1.2em + 10px);
+    background: linear-gradient(#000a, #222a);
+    border: 1px solid #aaaa;
+    border-radius: 3px;
+    box-shadow: 0 0 1px #000, inset 0 0 1px #000;
+    padding: 0;
+    margin: 0;
+
+    &:hover {
+        background: linear-gradient(#222a, #444a);
+    }
+    &:active {
+        background: linear-gradient(#000a, #111a);
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        opacity: 0;
+        top: 2px;
+        left: 7px;
+        transform: rotate(45deg);
+        border-bottom: 2px solid white;
+        border-right: 2px solid white;
+        width: 6px;
+        height: 13px;
+    }
+    &:hover::before {
+        opacity: 1;
+        border-color: black;
+    }
+    &:checked::before {
+        opacity: 1;
+        border-color: white;
+    }
+}
+
+
+
+.option-multi-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.option-multi-toggle > label {
+    padding: 4px 12px 4px 7px;
+}
+
+.option-slider {
+    display: flex;
+}
+.option-slider > input[type=range] {
+    appearance: none;
+    width: 65%;
+    flex: 0 1 65%;
+    background: linear-gradient(#000a, #222a);
+    border: 1px solid #aaaa;
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+    box-shadow: inset 0 0 1px #000;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    cursor: ew-resize;
+
+    --thumb-bg: linear-gradient(#666, #333);
+
+    &:hover {
+        --thumb-bg: linear-gradient(#888, #444);
+    }
+    &:active {
+        --thumb-bg: linear-gradient(#444, #222);
+    }
+
+    &::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        height: 100%;
+    }
+      
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 8px;
+        height: 100%;
+        background: var(--thumb-bg);
+        border: none;
+        box-shadow: 0 0 0 1px #aaaa, -100vw 0 0 100vw #ccc3, inset 0 0 1px #0007;
+        border-radius: 0;
+    }
+      
+    &::-moz-range-thumb {
+        width: 8px;
+        height: 100%;
+        background: var(--thumb-bg);
+        border: none;
+        box-shadow: 0 0 0 1px #aaaa, -100vw 0 0 100vw #ccc3, inset 0 0 1px #0007;
+        border-radius: 0;
+    }
+}
+.option-slider > input[type=text] {
+    height: 100%;
+    width: 35%;
+    flex: 0 1 35%;
+    background: linear-gradient(#000a, #222a);
+    border: 1px solid #aaaa;
+    color: white;
+    border-radius: 0 3px 3px 0;
+    box-shadow: inset 0 0 1px #000;
+    padding: 5px 7px;
+    margin: 0;
+}
+
+/* -------------------------------------------------- Save stuff
+*/
+#save-box {
+    height: calc(1.2em + 12px);
+    width: 100%;
+    background: linear-gradient(#000a, #222a);
+    border: 1px solid #aaaa;
+    color: white;
+    border-radius: 3px;
+    box-shadow: inset 0 0 1px #000;
+    padding: 5px 7px;
+    margin: 7px 0 0 0;
+}
+#save-summary {
+    margin-block: 7px;
+    padding-inline-start: 20px;
+}
